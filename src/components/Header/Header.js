@@ -1,7 +1,11 @@
+import { Colors } from '../../styles';
+import { Typography, Box } from '@mui/material';
+import style from './Header.module.css';
+
 export default function Header() {
   return (
-    <div>
-      <h1>Add Todo List</h1>
-    </div>
+    <Box>
+      <Typography className={style.root}>Add your tasks</Typography>
+    </Box>
   );
 }

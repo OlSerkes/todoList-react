@@ -1,8 +1,69 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SaveIcon from '@mui/icons-material/Save';
+import {
+  Box,
+  TextField,
+  IconButton,
+  Typography,
+  List,
+  ListItem,
+  Checkbox,
+  FormControl,
+  Button,
+  ButtonGroup,
+} from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import theme, { Colors } from '../../styles';
 
 export default function ListTodo({ todo, setTodo }) {
   const [edit, setEdit] = useState(null);
   const [value, setValue] = useState('');
+  const [filtered, setFiltered] = useState(todo);
+
+  useEffect(() => {
+    setFiltered(todo);
+  }, [todo]);
+
+  const buttons = [
+    <Button
+      key='all'
+      variant='outlined'
+      onClick={() => {
+        todoFilter('all');
+      }}
+    >
+      All
+    </Button>,
+    <Button
+      key='active'
+      variant='outlined'
+      onClick={() => {
+        todoFilter(true);
+      }}
+    >
+      Active
+    </Button>,
+    <Button
+      key='completed'
+      variant='outlined'
+      onClick={() => {
+        todoFilter(false);
+      }}
+    >
+      Completed
+    </Button>,
+  ];
+
+  const todoFilter = (status) => {
+    if (status === 'all') {
+      setFiltered(todo);
+    } else {
+      let newTodo = [...todo].filter((item) => !item.checked === status);
+      setFiltered(newTodo);
+    }
+  };
 
   const deleteTodo = (id) => {
     const newTodo = [...todo].filter((item) => item.id !== id);
@@ -35,62 +96,112 @@ export default function ListTodo({ todo, setTodo }) {
     setEdit(null);
   };
 
-  const renderList = todo.map((item) => (
-    <li key={item.id}>
-      <div className='todo'>
-        {edit === item.id ? (
-          <div>
-            <input
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-            ></input>
-          </div>
-        ) : (
-          <label htmlFor='check'>{item.title}</label>
-        )}
-        {edit === item.id ? (
-          <button onClick={() => saveTodo(item.id)}>Save</button>
-        ) : (
-          <>
-            <div>
-              <input
-                className='status_btn'
-                type='checkbox'
-                name='check'
-                id='check'
-                defaultChecked={item.checked}
-                onClick={() => statusTodo(item.id)}
-              />
-            </div>
-            <div>
-              <button
-                className='edit_btn'
-                onClick={() => editTodo(item.id, item.title)}
-              >
-                Edit todo
-              </button>
-              <button
-                className='delete_btn'
-                onClick={() => deleteTodo(item.id)}
-              >
-                Delete todo
-              </button>
-            </div>
-          </>
-        )}
-      </div>
-    </li>
+  const renderList = filtered.map((item) => (
+    <ListItem
+      key={item.id}
+      sx={{
+        background: Colors.white,
+        borderRadius: '6px',
+        m: '15px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: 'auto',
+      }}
+    >
+      {edit === item.id ? (
+        <FormControl>
+          <TextField
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          ></TextField>
+        </FormControl>
+      ) : (
+        <Typography
+          sx={{
+            flexGrow: 1,
+            wordBreak: 'break-all',
+            hyphens: 'auto',
+            textAlign: 'justify',
+            textDecoration: item.checked ? 'line-through' : 'none',
+          }}
+          component='div'
+        >
+          {item.title}
+        </Typography>
+      )}
+      {edit === item.id ? (
+        <IconButton onClick={() => saveTodo(item.id)} size='medium'>
+          <SaveIcon fontSize='medium' sx={{ color: Colors.shaft }} />
+        </IconButton>
+      ) : (
+        <>
+          <Box sx={{ display: 'flex' }}>
+            <Checkbox
+              className='status_btn'
+              type='checkbox'
+              name='check'
+              id='check'
+              checked={item.checked}
+              onClick={() => statusTodo(item.id)}
+            />
+
+            <IconButton
+              onClick={() => editTodo(item.id, item.title)}
+              size='large'
+            >
+              <EditNoteIcon fontSize='medium' sx={{ color: Colors.shaft }} />
+            </IconButton>
+            <IconButton onClick={() => deleteTodo(item.id)} size='large'>
+              <DeleteIcon fontSize='medium' sx={{ color: Colors.shaft }} />
+            </IconButton>
+          </Box>
+        </>
+      )}
+    </ListItem>
   ));
 
   return (
-    <div>
+    <Box
+      sx={{
+        background: Colors.light,
+        borderRadius: '11px',
+        width: { sm: 400, md: 550 },
+        my: 0,
+        mx: 'auto',
+      }}
+    >
       {todo.length > 0 ? (
-        <ul className='todo_list'>{renderList}</ul>
+        <List className='todo_list' sx={{ px: 0 }}>
+          {renderList}
+        </List>
       ) : (
-        <div className='empty'>
-          <p>There is no task</p>
-        </div>
+        <Box
+          className='empty'
+          sx={{
+            textAlign: 'center',
+            p: 1,
+          }}
+        >
+          <Typography variant='body2'>There is no task</Typography>
+        </Box>
       )}
-    </div>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          '& > *': {
+            m: 1,
+          },
+        }}
+      >
+        <ThemeProvider theme={theme}>
+          <ButtonGroup size='small' aria-label='small button group'>
+            {buttons}
+          </ButtonGroup>
+        </ThemeProvider>
+      </Box>
+    </Box>
   );
 }

@@ -1,5 +1,14 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import {
+  FormControl,
+  TextField,
+  IconButton,
+  Box,
+  InputAdornment,
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import { Colors } from '../../styles';
 
 export default function CreateTodo({ todo, setTodo }) {
   const [value, setValue] = useState('');
@@ -20,19 +29,37 @@ export default function CreateTodo({ todo, setTodo }) {
   };
 
   return (
-    <section className='form_todo'>
-      <div className='form'>
-        <label>
-          <input
-            name='todo'
-            id='todo'
-            value={value}
-            placeholder='What needs to be done?'
-            onChange={inputHandler}
-          />
-        </label>
-        <button onClick={addTodo}>Add</button>
-      </div>
-    </section>
+    <Box className='form_todo' sx={{ textAlign: 'center' }}>
+      <FormControl
+        className='form'
+        sx={{
+          display: 'inline-block',
+          textAlign: 'center',
+        }}
+        margin='normal'
+      >
+        <TextField
+          name='todo'
+          id='todo'
+          value={value}
+          placeholder='Please enter what needs to be done'
+          size='small'
+          margin='dense'
+          onChange={inputHandler}
+          sx={{
+            width: { sm: 400, md: 550 },
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                <IconButton onClick={addTodo} size='large'>
+                  <AddIcon fontSize='large' sx={{ color: Colors.shaft }} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </FormControl>
+    </Box>
   );
 }
