@@ -62,6 +62,13 @@ const overrides = {
             },
           },
         },
+        {
+          props: { variant: 'active' },
+          style: {
+            backgroundColor: Colors.primary,
+            color: Colors.white,
+          },
+        },
       ],
     },
   },
@@ -75,9 +82,6 @@ const overrides = {
     },
   },
 };
-
-// TODO: use overrides object to create theme
-// const theme =;
 
 const theme = createTheme(overrides);
 

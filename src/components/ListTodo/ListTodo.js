@@ -11,11 +11,9 @@ import {
   ListItem,
   Checkbox,
   FormControl,
-  Button,
-  ButtonGroup,
 } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
-import theme, { Colors } from '../../styles';
+import { Colors } from '../../styles';
+import FilteredButtons from '../FilteredButtons/FilteredButtons';
 
 export default function ListTodo({ todo, setTodo }) {
   const [edit, setEdit] = useState(null);
@@ -25,45 +23,6 @@ export default function ListTodo({ todo, setTodo }) {
   useEffect(() => {
     setFiltered(todo);
   }, [todo]);
-
-  const buttons = [
-    <Button
-      key='all'
-      variant='outlined'
-      onClick={() => {
-        todoFilter('all');
-      }}
-    >
-      All
-    </Button>,
-    <Button
-      key='active'
-      variant='outlined'
-      onClick={() => {
-        todoFilter(true);
-      }}
-    >
-      Active
-    </Button>,
-    <Button
-      key='completed'
-      variant='outlined'
-      onClick={() => {
-        todoFilter(false);
-      }}
-    >
-      Completed
-    </Button>,
-  ];
-
-  const todoFilter = (status) => {
-    if (status === 'all') {
-      setFiltered(todo);
-    } else {
-      let newTodo = [...todo].filter((item) => !item.checked === status);
-      setFiltered(newTodo);
-    }
-  };
 
   const deleteTodo = (id) => {
     const newTodo = [...todo].filter((item) => item.id !== id);
@@ -186,22 +145,12 @@ export default function ListTodo({ todo, setTodo }) {
           <Typography variant='body2'>There is no task</Typography>
         </Box>
       )}
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          '& > *': {
-            m: 1,
-          },
-        }}
-      >
-        <ThemeProvider theme={theme}>
-          <ButtonGroup size='small' aria-label='small button group'>
-            {buttons}
-          </ButtonGroup>
-        </ThemeProvider>
-      </Box>
+
+      <FilteredButtons
+        filtered={filtered}
+        setFiltered={setFiltered}
+        todo={todo}
+      />
     </Box>
   );
 }
