@@ -1,41 +1,17 @@
 import { Box, Button, ButtonGroup } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme, { Colors } from '../../styles';
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 
-export default function FilteredButtons({ filtered, setFiltered, todo }) {
-  const buttons = [
-    { label: 'All', status: 'all' },
-    { label: 'Active', status: true },
-    { label: 'Completed', status: false },
-  ];
-
-  const [isActiveButton, setIsActiveButton] = useState(0);
-  const [buttonsData, setButtonsData] = useState(buttons);
-
-  useEffect(() => {
-    const activeButtonLength = todo.filter((item) => !item.checked).length;
-    const completedButtonLength = todo.filter((item) => item.checked).length;
-
-    setButtonsData((prevButtonsData) => [
-      { ...prevButtonsData[0], length: todo.length },
-      { ...prevButtonsData[1], length: activeButtonLength },
-      { ...prevButtonsData[2], length: completedButtonLength },
-    ]);
-  }, [todo]);
-
+export default function FilteredButtons({
+  buttonsData,
+  setIsActiveButton,
+  isActiveButton,
+  todoFilter,
+}) {
   const handleButtonClick = (status, index) => {
     setIsActiveButton(index);
     todoFilter(status);
-  };
-
-  const todoFilter = (status) => {
-    if (status === 'all') {
-      setFiltered(todo);
-    } else {
-      let newTodo = todo.filter((item) => !item.checked === status);
-      setFiltered(newTodo);
-    }
   };
 
   return (

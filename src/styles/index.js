@@ -56,6 +56,7 @@ const overrides = {
           style: {
             backgroundColor: Colors.light,
             color: Colors.primary,
+            fontSize: '11px',
             '&:hover': {
               backgroundColor: Colors.primary,
               color: Colors.white,

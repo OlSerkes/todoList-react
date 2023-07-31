@@ -13,7 +13,8 @@ import {
   FormControl,
 } from '@mui/material';
 import { Colors } from '../../styles';
-import FilteredButtons from '../FilteredButtons/FilteredButtons';
+// import FilteredButtons from '../FilteredButtons/FilteredButtons';
+import TodoActions from '../TodoActions/TodoActions';
 
 export default function ListTodo({ todo, setTodo }) {
   const [edit, setEdit] = useState(null);
@@ -131,9 +132,16 @@ export default function ListTodo({ todo, setTodo }) {
       }}
     >
       {todo.length > 0 ? (
-        <List className='todo_list' sx={{ px: 0 }}>
-          {renderList}
-        </List>
+        <>
+          <List className='todo_list' sx={{ px: 0 }}>
+            {renderList}
+          </List>
+          <TodoActions
+            setFiltered={setFiltered}
+            setTodo={setTodo}
+            todo={todo}
+          />
+        </>
       ) : (
         <Box
           className='empty'
@@ -145,12 +153,6 @@ export default function ListTodo({ todo, setTodo }) {
           <Typography variant='body2'>There is no task</Typography>
         </Box>
       )}
-
-      <FilteredButtons
-        filtered={filtered}
-        setFiltered={setFiltered}
-        todo={todo}
-      />
     </Box>
   );
 }
