@@ -1,7 +1,6 @@
 import { Box, Button, ButtonGroup } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme, { Colors } from '../../styles';
-// import { useEffect, useState } from 'react';
 
 export default function FilteredButtons({
   buttonsData,

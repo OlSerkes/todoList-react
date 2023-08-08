@@ -13,17 +13,25 @@ import {
   FormControl,
 } from '@mui/material';
 import { Colors } from '../../styles';
-// import FilteredButtons from '../FilteredButtons/FilteredButtons';
 import TodoActions from '../TodoActions/TodoActions';
 
 export default function ListTodo({ todo, setTodo }) {
   const [edit, setEdit] = useState(null);
   const [value, setValue] = useState('');
   const [filtered, setFiltered] = useState(todo);
+  const [filterStatus, setFilterStatus] = useState('all');
 
   useEffect(() => {
-    setFiltered(todo);
-  }, [todo]);
+    if (filterStatus === 'all') {
+      setFiltered(todo);
+    } else if (filterStatus === 'active') {
+      const activeTodo = todo.filter((item) => !item.checked);
+      setFiltered(activeTodo);
+    } else if (filterStatus === 'completed') {
+      const completedTodo = todo.filter((item) => item.checked);
+      setFiltered(completedTodo);
+    }
+  }, [todo, filterStatus]);
 
   const deleteTodo = (id) => {
     const newTodo = [...todo].filter((item) => item.id !== id);
@@ -37,6 +45,7 @@ export default function ListTodo({ todo, setTodo }) {
       }
       return item;
     });
+
     return setTodo(newTodo);
   };
 
@@ -138,6 +147,7 @@ export default function ListTodo({ todo, setTodo }) {
           </List>
           <TodoActions
             setFiltered={setFiltered}
+            setFilterStatus={setFilterStatus}
             setTodo={setTodo}
             todo={todo}
           />

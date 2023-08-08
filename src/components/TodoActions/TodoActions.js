@@ -3,7 +3,12 @@ import FilteredButtons from '../FilteredButtons/FilteredButtons';
 import { Box, Button, ThemeProvider } from '@mui/material';
 import theme, { Colors } from '../../styles';
 
-export default function TodoActions({ setTodo, setFiltered, todo }) {
+export default function TodoActions({
+  setTodo,
+  setFiltered,
+  setFilterStatus,
+  todo,
+}) {
   const buttons = [
     { label: 'All', status: 'all' },
     { label: 'Active', status: true },
@@ -15,8 +20,8 @@ export default function TodoActions({ setTodo, setFiltered, todo }) {
   const [headingText, setHeadingText] = useState('');
 
   useEffect(() => {
-    const activeTodo = todo.filter((item) => !item.checked);
-    const completedTodo = todo.filter((item) => item.checked);
+    const activeTodo = [...todo].filter((item) => !item.checked);
+    const completedTodo = [...todo].filter((item) => item.checked);
 
     const tasksNoun = activeTodo.length !== 1 ? 'tasks' : 'task';
     setHeadingText(
@@ -34,10 +39,9 @@ export default function TodoActions({ setTodo, setFiltered, todo }) {
 
   const todoFilter = (status) => {
     if (status === 'all') {
-      setFiltered(todo);
+      setFilterStatus(status);
     } else {
-      let newTodo = todo.filter((item) => !item.checked === status);
-      setFiltered(newTodo);
+      setFilterStatus(status ? 'active' : 'completed');
     }
   };
 

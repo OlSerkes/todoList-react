@@ -28,6 +28,11 @@ export default function CreateTodo({ todo, setTodo }) {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addTodo();
+  };
+
   return (
     <Box className='form_todo' sx={{ textAlign: 'center' }}>
       <FormControl
@@ -37,12 +42,14 @@ export default function CreateTodo({ todo, setTodo }) {
           textAlign: 'center',
         }}
         margin='normal'
+        onSubmit={handleSubmit}
+        component='form'
       >
         <TextField
           name='todo'
           id='todo'
           value={value}
-          placeholder='Please enter what needs to be done'
+          placeholder='Please, enter what needs to be done'
           size='small'
           margin='dense'
           onChange={inputHandler}
@@ -52,7 +59,7 @@ export default function CreateTodo({ todo, setTodo }) {
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>
-                <IconButton onClick={addTodo} size='large'>
+                <IconButton type='submit' size='large'>
                   <AddIcon fontSize='large' sx={{ color: Colors.shaft }} />
                 </IconButton>
               </InputAdornment>
