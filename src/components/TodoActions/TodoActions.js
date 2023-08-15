@@ -1,7 +1,10 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import FilteredButtons from '../FilteredButtons/FilteredButtons';
-import { Box, Button, ThemeProvider } from '@mui/material';
-import theme, { Colors } from '../../styles';
+import { Box, Button, useMediaQuery, useTheme } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import { Span } from './styles';
+import theme from '../../styles';
 
 export default function TodoActions({
   setTodo,
@@ -15,9 +18,25 @@ export default function TodoActions({
     { label: 'Completed', status: false },
   ];
 
+  const boxTheme = useTheme();
+  const isDesctop = useMediaQuery(boxTheme.breakpoints.up('md'));
   const [isActiveButton, setIsActiveButton] = useState(0);
   const [buttonsData, setButtonsData] = useState(buttons);
   const [headingText, setHeadingText] = useState('');
+
+  let boxStyle = isDesctop
+    ? {
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+      }
+    : {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '15px 0',
+      };
 
   useEffect(() => {
     const activeTodo = [...todo].filter((item) => !item.checked);
@@ -52,28 +71,16 @@ export default function TodoActions({
 
   return (
     <>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-        }}
-      >
-        <Box
-          component='span'
-          m='{1}'
-          sx={{ color: Colors.primary, fontWeight: 'bold' }}
-        >
-          {headingText}
-        </Box>
+      <Box sx={boxStyle}>
+        <Span>{headingText}</Span>
         <FilteredButtons
           buttonsData={buttonsData}
           isActiveButton={isActiveButton}
           setIsActiveButton={setIsActiveButton}
           todoFilter={todoFilter}
         />
-        {todo.some((item) => item.checked) && (
-          <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+          {todo.some((item) => item.checked) && (
             <Button
               variant='outlined'
               size='small'
@@ -81,8 +88,8 @@ export default function TodoActions({
             >
               Clear compleated
             </Button>
-          </ThemeProvider>
-        )}
+          )}
+        </ThemeProvider>
       </Box>
     </>
   );

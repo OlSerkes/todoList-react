@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import { styled, createTheme } from '@mui/material/styles';
 import { lighten } from 'polished';
 
 export const Colors = {
@@ -10,9 +10,9 @@ export const Colors = {
   dove_gray: '#d5d5d5',
   body_bg: '#f3f6f9',
   white: '#fff',
+  black: '#000',
 };
 
-// TODO: define overrides object to create theme
 const overrides = {
   palette: {
     primary: {
@@ -22,50 +22,27 @@ const overrides = {
       main: Colors.secondary,
     },
   },
-
   components: {
-    MuiDrawer: {
-      styleOverrides: {
-        paper: {
-          background: Colors.dark,
-          color: Colors.dove_gray,
-          borderRadius: '0px 10px 10px 0px',
-          borderRight: `1px solid ${Colors.primary}`,
-        },
-      },
-    },
-    MuiDivider: {
-      styleOverrides: {
-        root: {
-          borderColor: lighten(0.2, Colors.dark),
-        },
-      },
-    },
     MuiButton: {
       variants: [
         {
-          props: { variant: 'outlined' },
+          props: { variant: 'outlined', color: 'primary' },
           style: {
             backgroundColor: Colors.light,
-            color: Colors.primary,
             fontSize: '11px',
             '&:hover': {
               backgroundColor: Colors.primary,
               color: Colors.white,
             },
-          },
-        },
-        {
-          props: { variant: 'active' },
-          style: {
-            backgroundColor: Colors.primary,
-            color: Colors.white,
+            '&:active': {
+              backgroundColor: Colors.primary,
+              color: Colors.white,
+            },
           },
         },
       ],
     },
   },
-
   breakpoints: {
     values: {
       mobile: 0,

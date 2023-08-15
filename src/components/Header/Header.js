@@ -1,11 +1,11 @@
-import { Colors } from '../../styles';
-import { Typography, Box } from '@mui/material';
-import style from './Header.module.css';
+import React from 'react';
+import { Typography } from '@mui/material';
+import { HeaderBox } from './styles';
 
 export default function Header() {
   return (
-    <Box>
-      <Typography className={style.root}>Add your tasks</Typography>
-    </Box>
+    <HeaderBox>
+      <Typography sx={{ fontSize: '32px' }}>Add your tasks</Typography>
+    </HeaderBox>
   );
 }

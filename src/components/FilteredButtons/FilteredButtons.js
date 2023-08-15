@@ -1,6 +1,8 @@
-import { Box, Button, ButtonGroup } from '@mui/material';
+import React from 'react';
+import { Button, ButtonGroup } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme, { Colors } from '../../styles';
+import { Box } from './styles';
 
 export default function FilteredButtons({
   buttonsData,
@@ -14,16 +16,7 @@ export default function FilteredButtons({
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        '& > *': {
-          m: 1,
-        },
-      }}
-    >
+    <Box>
       <ThemeProvider theme={theme}>
         <ButtonGroup size='small' aria-label='small button group'>
           {buttonsData.map((button, index) => (
