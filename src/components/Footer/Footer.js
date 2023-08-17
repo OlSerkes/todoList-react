@@ -6,7 +6,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 
 export default function Footer() {
   const theme = useTheme();
-  const isDesctop = useMediaQuery(theme.breakpoints.up('md'));
+  const isDesctop = useMediaQuery(theme.breakpoints.up('sm'));
 
   let boxStyle = isDesctop
     ? {

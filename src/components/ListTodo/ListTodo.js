@@ -4,15 +4,14 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import {
-  Box,
   TextField,
   IconButton,
   Typography,
-  List,
-  ListItem,
   Checkbox,
+  List,
   FormControl,
 } from '@mui/material';
+import { ListItem, TextInput, ButtonsBox, Wrapper, TextBox } from './styles';
 import { Colors } from '../../styles';
 import TodoActions from '../TodoActions/TodoActions';
 
@@ -67,18 +66,7 @@ export default function ListTodo({ todo, setTodo }) {
   };
 
   const renderList = filtered.map((item) => (
-    <ListItem
-      key={item.id}
-      sx={{
-        background: Colors.white,
-        borderRadius: '6px',
-        m: '15px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        width: 'auto',
-      }}
-    >
+    <ListItem key={item.id}>
       {edit === item.id ? (
         <FormControl>
           <TextField
@@ -87,18 +75,9 @@ export default function ListTodo({ todo, setTodo }) {
           ></TextField>
         </FormControl>
       ) : (
-        <Typography
-          sx={{
-            flexGrow: 1,
-            wordBreak: 'break-all',
-            hyphens: 'auto',
-            textAlign: 'justify',
-            textDecoration: item.checked ? 'line-through' : 'none',
-          }}
-          component='div'
-        >
+        <TextInput {...item} checked={item.checked}>
           {item.title}
-        </Typography>
+        </TextInput>
       )}
       {edit === item.id ? (
         <IconButton onClick={() => saveTodo(item.id)} size='medium'>
@@ -106,13 +85,19 @@ export default function ListTodo({ todo, setTodo }) {
         </IconButton>
       ) : (
         <>
-          <Box sx={{ display: 'flex' }}>
+          <ButtonsBox>
             <Checkbox
               className='status_btn'
               type='checkbox'
               name='check'
               id='check'
               checked={item.checked}
+              sx={{
+                color: item.checked ? Colors.primary : Colors.shaft,
+                '&.Mui-checked': {
+                  color: Colors.primary,
+                },
+              }}
               onClick={() => statusTodo(item.id)}
             />
 
@@ -125,22 +110,14 @@ export default function ListTodo({ todo, setTodo }) {
             <IconButton onClick={() => deleteTodo(item.id)} size='large'>
               <DeleteIcon fontSize='medium' sx={{ color: Colors.shaft }} />
             </IconButton>
-          </Box>
+          </ButtonsBox>
         </>
       )}
     </ListItem>
   ));
 
   return (
-    <Box
-      sx={{
-        background: Colors.light,
-        borderRadius: '11px',
-        width: { sm: 400, md: 550 },
-        my: 0,
-        mx: 'auto',
-      }}
-    >
+    <Wrapper>
       {todo.length > 0 ? (
         <>
           <List className='todo_list' sx={{ px: 0 }}>
@@ -154,16 +131,10 @@ export default function ListTodo({ todo, setTodo }) {
           />
         </>
       ) : (
-        <Box
-          className='empty'
-          sx={{
-            textAlign: 'center',
-            p: 1,
-          }}
-        >
+        <TextBox>
           <Typography variant='body2'>There is no task</Typography>
-        </Box>
+        </TextBox>
       )}
-    </Box>
+    </Wrapper>
   );
 }

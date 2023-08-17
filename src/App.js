@@ -1,7 +1,6 @@
 import React from 'react';
 import './index.css';
 import styled from 'styled-components';
-import { styles } from './styles';
 import { useState, useEffect } from 'react';
 import Header from './components/Header/Header';
 import CreateTodo from './components/CreateTodo/CreateTodo';
@@ -30,7 +29,7 @@ function App() {
   }, [todo]);
 
   return (
-    <Container className='App'>
+    <Container className='App' sx={{ px: { xs: 0, md: 0 } }}>
       <Wrapper className='wrapper'>
         <Header />
         <Main className='main'>

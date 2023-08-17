@@ -5,7 +5,9 @@ import { HeaderBox } from './styles';
 export default function Header() {
   return (
     <HeaderBox>
-      <Typography sx={{ fontSize: '32px' }}>Add your tasks</Typography>
+      <Typography sx={{ fontSize: { xs: '20px', sm: '28px', md: '32px' } }}>
+        Add your tasks
+      </Typography>
     </HeaderBox>
   );
 }
