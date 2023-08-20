@@ -54,14 +54,15 @@ Users should be able to:
 
 ### SetUp/Installation instructions:
 
-Clone this repository to your desktop
-npm install
-npm start
+- Clone this repository to your desktop
+- npm install
+- npm start
 
 ### Useful resources
 
 - [React Doc](https://react.dev/)
-- [material-ui](https://mui.com/material-ui/getting-started/installation/) - [developer.mozilla.org]https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_getting_started
+- [material-ui](https://mui.com/material-ui/getting-started/installation/)
+- [developer.mozilla.org]https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_getting_started
 
 ## Author
 
