@@ -86,7 +86,7 @@ export default function TodoActions({
               size='small'
               onClick={handleClearCompleted}
             >
-              Clear compleated
+              Clear completed
             </Button>
           )}
         </ThemeProvider>
