@@ -12,7 +12,6 @@ This is a solution to the TODO React app.
   - [SetUp/Installation instructions](#setUp/installation-instructions)
   - [Useful resources](#useful-resources)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
 
 ## Overview
 
